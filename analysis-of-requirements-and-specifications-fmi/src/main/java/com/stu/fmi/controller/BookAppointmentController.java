@@ -86,17 +86,6 @@ public class BookAppointmentController {
         }
     }
 
-    public void resendVerificationCode(Appointment appointment) {
-        String newVerificationCode = generateVerificationCode();
-        appointment.setVerificationCode(newVerificationCode);
-        appointment.getCustomer().sendVerificationCode();
-        System.out.println("A new verification code has been sent to your email.");
-    }
-
-    private String generateVerificationCode() {
-        return "123456";
-    }
-
     public String bookAppointment(LocalDateTime dateTime, Customer customer) {
         if (isAppointmentBooked(db.getAppointments(), dateTime)) {
             message =  "Няма налични часове за избраната дата";
