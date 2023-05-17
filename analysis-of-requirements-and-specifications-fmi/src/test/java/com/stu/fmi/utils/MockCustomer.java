@@ -5,7 +5,7 @@ import com.stu.fmi.model.Customer;
 import java.util.Random;
 
 public class MockCustomer extends Customer {
-    private String verificationCode = "1234";
+    private String verificationCode;
 
     public MockCustomer(String firstName, String lastName, String email, String phoneNumber) {
         super(firstName, lastName, email, phoneNumber);

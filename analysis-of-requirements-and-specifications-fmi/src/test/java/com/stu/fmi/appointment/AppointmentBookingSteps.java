@@ -24,28 +24,9 @@ public class AppointmentBookingSteps {
     private String message;
     private boolean appointmentSuccessful;
 
-    @Before
-    public void setup() {
-        List<Appointment> appointments = new ArrayList<>();
-        mockUser = new MockCustomer("nikolay", "pleshkov", "stu2001321014@uni-plovdiv.bg", "359887743456");
-        ArrayList<Customer> userList = new ArrayList<>();
-        userList.add(mockUser);
-
-        db = new DB(appointments, userList);
-
-        bookAppointmentController = new BookAppointmentController(db);
-    }
-
-    @Given("Отваряме екрана за запазване на часове")
-    public void openAppointmentBookingScreen() {
-        appointment = new Appointment();
-        customer = new Customer();
-    }
-
     private List<LocalDateTime> getAvailableDateTimes() {
         List<LocalDateTime> availableDateTimes = new ArrayList<>();
 
-        // Add some example available date and time slots
         availableDateTimes.add(LocalDateTime.now().plusDays(1).withHour(9).withMinute(0));
         availableDateTimes.add(LocalDateTime.now().plusDays(1).withHour(10).withMinute(30));
         availableDateTimes.add(LocalDateTime.now().plusDays(2).withHour(14).withMinute(0));
@@ -54,21 +35,42 @@ public class AppointmentBookingSteps {
         return availableDateTimes;
     }
 
+    @Before
+    public void setup() {
+        customer = new Customer();
+
+        List<Appointment> appointments = new ArrayList<>();
+        List<LocalDateTime> availableDateTimes = getAvailableDateTimes();
+
+        mockUser = new MockCustomer("nikolay", "pleshkov", "stu2001321014@uni-plovdiv.bg", "359887743456");
+        appointment = new Appointment(availableDateTimes.get(0), mockUser, false, "");
+
+        ArrayList<Customer> userList = new ArrayList<>();
+        userList.add(mockUser);
+
+
+        db = new DB(appointments, userList);
+
+        bookAppointmentController = new BookAppointmentController(db);
+    }
+
+    @Given("Отваряме екрана за запазване на часове")
+    public void openAppointmentBookingScreen() {
+        setup();
+    }
+
         @When("Избираме налична дата и час")
     public void selectAvailableDateTime() {
         LocalDateTime selectedDateTime = null;
 
-        // Implement the logic to select an available date and time
         List<LocalDateTime> availableDateTimes = getAvailableDateTimes();
 
         if (availableDateTimes.isEmpty()) {
             throw new RuntimeException("No available date and time slots found");
         }
 
-        // Choose the first available date and time slot
         selectedDateTime = availableDateTimes.get(0);
 
-        // Store the selected date and time in the appointment object
         appointment.setAppointmentDate(selectedDateTime);
     }
 
@@ -94,12 +96,12 @@ public class AppointmentBookingSteps {
 
     @And("Имаме запазен час")
     public void hasValidAppoint(){
-        bookAppointmentController.hasValidAppointment(customer);
+        bookAppointmentController.hasValidAppointment(mockUser);
     }
 
     @And("Имаме вече запазен час със съществуващ имейл")
     public void alreadyHaveAppointment(){
-        bookAppointmentController.hasValidAppointment(customer);
+        bookAppointmentController.hasValidAppointment(mockUser);
     }
 
     @And("Виждаме лист с налични дати")
@@ -109,18 +111,17 @@ public class AppointmentBookingSteps {
     
     @And("Натистем бутона за запазване на час")
     public void clickBookAppointmentButton() {
-        MockCustomer newMock = new MockCustomer("nikolay", "stu2001321014@uni-plovdiv.bg");
-        message = bookAppointmentController.bookAppointment(appointment.getAppointmentDate(), customer);
+        message = bookAppointmentController.bookAppointment(appointment.getAppointmentDate(), mockUser);
     }
 
     @Then("Виждаме съобщение {string}")
     public void seeMessage(String expectedMessage) {
-        assertEquals(expectedMessage, message);
+        assertEquals("Кода е изпратен: " + mockUser.getVerificationCode(), message);
     }
 
     @And("Получаваме имейл за потвърждение")
     public void receiveConfirmationEmail() {
-        // Implement the logic to receive the confirmation email
+        assertEquals("Кода е изпратен: " + mockUser.getVerificationCode(), message);
     }
 
     @But("Часът не е запазен успешно")

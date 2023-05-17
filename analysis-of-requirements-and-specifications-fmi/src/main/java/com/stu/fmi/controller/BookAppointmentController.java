@@ -70,17 +70,19 @@ public class BookAppointmentController {
                 customer.getPhone() != null && !customer.getPhone().isEmpty();
     }
 
-    public void verifyAppointment(Appointment appointment, String verificationCode) {
+    public String verifyAppointment(Appointment appointment, String verificationCode) {
+        if(verificationCode == null){
+            return "Въведете валиден код";
+        }
         if (appointment.isVerified()) {
-            message = "Вече имате потвърдена среща";
-            return;
+            return "Вече имате потвърдена среща";
         }
 
         if (verificationCode.equals(appointment.getVerificationCode())) {
             appointment.setVerified(true);
-            message = "Успешно потвърден час";
+            return "Успешно потвърден час";
         } else {
-            message = "Грешен код за потвърждение";
+            return "Грешен код за потвърждение";
         }
     }
 
@@ -92,23 +94,23 @@ public class BookAppointmentController {
     }
 
     private String generateVerificationCode() {
-        // Generate a random verification code
-        // You can implement your own logic to generate the code
-        return "123456"; // Example code for demonstration purposes
+        return "123456";
     }
 
     public String bookAppointment(LocalDateTime dateTime, Customer customer) {
         if (isAppointmentBooked(db.getAppointments(), dateTime)) {
             message =  "Няма налични часове за избраната дата";
+            return "Няма налични часове за избраната дата";
         }
 
         if (hasValidAppointment(customer)) {
             message = "Вече имате запазен час";
-
+            return "Вече имате запазен час";
         }
 
         if (!isValidCustomer(customer)) {
             message = "Трябва да въведете валидна информация за вас";
+            return "Трябва да въведете валидна информация за вас";
         }
 
         Appointment appointment = new Appointment(dateTime, customer, false, "");

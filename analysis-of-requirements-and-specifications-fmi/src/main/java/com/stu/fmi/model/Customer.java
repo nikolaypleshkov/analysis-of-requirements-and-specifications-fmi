@@ -1,10 +1,14 @@
 package com.stu.fmi.model;
 
+import java.util.Random;
+
 public class Customer {
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
+
+    private String verificationCode;
 
     public Customer() {
     }
@@ -39,7 +43,25 @@ public class Customer {
     }
 
     public String sendVerificationCode() {
-        return "Успешно запазване на час";
+        verificationCode = generateVerificationCode();
+        return "Кода е изпратен: " + verificationCode;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    private String generateVerificationCode() {
+        Random random = new Random();
+        int codeLength = 6;
+
+        StringBuilder codeBuilder = new StringBuilder();
+        for (int i = 0; i < codeLength; i++) {
+            int digit = random.nextInt(10);
+            codeBuilder.append(digit);
+        }
+
+        return codeBuilder.toString();
     }
 
     public void setFirstName(String firstName) {
