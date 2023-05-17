@@ -4,6 +4,10 @@
   <groupId>org.example</groupId>
   <artifactId>analysis-of-requirements-and-specifications-fmi</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <properties>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
+  </properties>
   <name>Archetype - analysis-of-requirements-and-specifications-fmi</name>
   <url>http://maven.apache.org</url>
 
