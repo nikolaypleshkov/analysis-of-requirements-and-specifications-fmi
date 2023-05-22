@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df725e2d-a934-43c6-ba77-62259776e1fb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/stu/fmi/controller/BookAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/stu/fmi/controller/BookAppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/cucumber-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/cucumber-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +144,8 @@
       <updated>1684306274855</updated>
       <workItem from="1684306277090" duration="11321000" />
       <workItem from="1684323148291" duration="4614000" />
-      <workItem from="1684332806752" duration="3252000" />
+      <workItem from="1684332806752" duration="3860000" />
+      <workItem from="1684779942992" duration="331000" />
     </task>
     <servers />
   </component>
